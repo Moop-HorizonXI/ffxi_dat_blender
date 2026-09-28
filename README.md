@@ -40,7 +40,7 @@ Changes only affect what your own game client displays.
 3. Rename your exported file to exactly the same name and copy it over the original.
 4. Start the game. To undo, copy the backup back.
 
-**Tip:** start with a small addition, such as extruding one face, to confirm your client loads added geometry before you spend time modeling.
+**Tip:** to see a finished result first, install the ready-made example in [`examples/`](examples/readme.txt) (the Tarutaru horns shown above, at `ROM/46/100.DAT`).
 
 ---
 
@@ -120,4 +120,5 @@ Export refuses a mesh that's over the limit and says by how much.
 - **In game:** an exported DAT with added horns loads in the game client. The horns are skinned to the
   head and mirrored to both sides by the game (see the screenshot at the top).
 
-No game files are included in this repository. Use DATs from your own FFXI install.
+Apart from the example mod in `examples/ROM/46/100.DAT`, no game files are included in this repository.
+Use DATs from your own FFXI install.

@@ -3,6 +3,8 @@
 *.DAT
 *_textures/
 *.dds
+# ...except the ready-to-install example mod
+!examples/ROM/46/100.DAT
 
 # Python / Blender clutter
 __pycache__/
