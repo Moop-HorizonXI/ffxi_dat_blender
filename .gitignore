@@ -1,0 +1,10 @@
+# FFXI game data is not redistributed: use DATs from your own install
+*.dat
+*.DAT
+*_textures/
+*.dds
+
+# Python / Blender clutter
+__pycache__/
+*.pyc
+*.blend1
