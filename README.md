@@ -4,7 +4,7 @@ A Blender add-on that opens Final Fantasy XI model DATs directly and writes new 
 You can **add, delete or reshape geometry**: vertex and triangle counts are rebuilt on export.
 No Model Viewer, Metasequoia or Noesis round trip is needed.
 
-![Original model (left) and the same model with added horns, re-read from the exported DAT](examples/100_with_horns_preview.png)
+![In game: a Tarutaru face with horns added in Blender with this add-on](examples/in_game.webp)
 
 Changes only affect what your own game client displays.
 
@@ -117,6 +117,7 @@ Export refuses a mesh that's over the limit and says by how much.
   bone table, mirror refs, materials and draw order exact.
 - A test edit (a horn added to the mirrored hair mesh, and a second mesh extruded from 24 to 96 triangles)
   reads correctly in this add-on **and in Noesis**, an independent FFXI reader, with the horn mirrored to both sides.
-- Not yet verified: loading in the actual game client.
+- **In game:** an exported DAT with added horns loads in the game client. The horns are skinned to the
+  head and mirrored to both sides by the game (see the screenshot at the top).
 
 No game files are included in this repository. Use DATs from your own FFXI install.
