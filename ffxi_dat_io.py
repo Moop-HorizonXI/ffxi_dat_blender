@@ -712,7 +712,7 @@ if bpy is not None:
 
     _stats = {}      # object name -> plan_stats() result, or {"error": text}
     _dirty = set()   # object names whose stats need recomputing
-    _state = {"timer": False, "cost": 0.0, "draw": None}
+    _state = {"cost": 0.0, "draw": None}
 
     COL_OK, COL_WARN, COL_BAD = (0.45, 0.85, 0.45, 1), (0.95, 0.78, 0.30, 1), (0.98, 0.38, 0.32, 1)
     COL_TEXT, COL_DIM = (0.95, 0.95, 0.95, 1), (0.72, 0.72, 0.72, 1)
@@ -725,13 +725,15 @@ if bpy is not None:
                 and o.parent is not None and o.parent.get("ffxi_source")]
 
     def _schedule(delay=None):
-        if not _state["timer"]:
-            _state["timer"] = True
+        # Ask Blender whether the timer is pending rather than keeping our own flag: loading
+        # a file (File > New, Open, ...) silently drops non-persistent timers, and a stale
+        # flag left the budget stuck on "calculating..." for good.
+        if not bpy.app.timers.is_registered(_recompute):
             # back off on heavy meshes so dragging vertices stays smooth
-            bpy.app.timers.register(_recompute, first_interval=delay or max(0.2, _state["cost"] * 3))
+            bpy.app.timers.register(_recompute, first_interval=delay or max(0.2, _state["cost"] * 3),
+                                    persistent=True)
 
     def _recompute():
-        _state["timer"] = False
         start = time.perf_counter()
         for name in list(_dirty):
             _dirty.discard(name)
@@ -1099,6 +1101,8 @@ if bpy is not None:
         _state["draw"] = bpy.types.SpaceView3D.draw_handler_add(_draw_overlay, (), "WINDOW", "POST_PIXEL")
 
     def unregister():
+        if bpy.app.timers.is_registered(_recompute):
+            bpy.app.timers.unregister(_recompute)
         if _state["draw"] is not None:
             bpy.types.SpaceView3D.draw_handler_remove(_state["draw"], "WINDOW")
             _state["draw"] = None
